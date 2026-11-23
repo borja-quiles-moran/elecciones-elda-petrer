@@ -94,17 +94,94 @@ details.resto table.res{width:100%;margin:0}
 #warn a{color:#111;font-weight:600}
 .btn,.seg{border-radius:0}
 @media (max-width:600px){#title{font-size:17px;padding:10px 0 8px}#info{border-radius:0}#info .hd{border-radius:0}}
+
+/* ===== Versión accesible: desplegable, etiqueta sencilla, letra grande ===== */
+html,body{color:#1a1a1a;font-size:17px}
+#title{font-size:24px;line-height:1.25}
+#tabs{display:none}
+#picker{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:12px 12px 12px;border-bottom:2px solid #111}
+#picker label{font-size:17px;font-weight:700;color:#111}
+#picker .selwrap{position:relative;flex:0 1 340px;min-width:240px}
+#picker select{appearance:none;-webkit-appearance:none;width:100%;font:inherit;font-size:19px;font-weight:700;color:#fff;background:#111;border:2px solid #111;border-radius:0;padding:11px 48px 11px 14px;cursor:pointer;line-height:1.2}
+#picker select:hover{background:#333}
+#picker select:focus-visible{outline:3px solid #f5b400;outline-offset:2px}
+#picker select option{background:#fff;color:#111;font-weight:400}
+#picker .selwrap:after{content:'';position:absolute;right:18px;top:50%;width:10px;height:10px;margin-top:-8px;border-right:3px solid #fff;border-bottom:3px solid #fff;transform:rotate(45deg);pointer-events:none}
+#warn{font-size:15px;color:#333;padding:6px 12px;line-height:1.4}
+#warn a{font-size:15px}
+#method{font-size:16px}
+#method p{line-height:1.55}
+.panel{font-size:16px;line-height:1.4}
+#info{width:350px}
+#info .hint{font-size:17px;color:#222;padding:14px 16px;line-height:1.4}
+#info .hd{padding:12px 56px 12px 16px}
+#info .hd .m{font-size:23px}
+#info .hd .l2{font-size:16px;margin-top:3px;opacity:1}
+#info .hd .x{right:6px;top:6px;width:44px;height:44px;font-size:30px;line-height:40px;text-align:center}
+#info .hd .x:focus-visible{outline:3px solid #f5b400}
+.prt{padding:12px 16px 4px}
+.prt .r{display:grid;grid-template-columns:132px 1fr 66px;grid-template-areas:"n b v";align-items:center;column-gap:10px;padding:6px 0;border-bottom:1px solid #e6e6e6}
+.prt .r:last-child{border-bottom:0}
+.prt .n{grid-area:n;font-size:18px;font-weight:700;color:#111;line-height:1.25}
+.prt .n i{display:inline-block;width:12px;height:12px;margin-right:7px;vertical-align:0}
+.prt .bar{grid-area:b;height:14px;background:#eee;position:relative}
+.prt .bar span{position:absolute;left:0;top:0;bottom:0}
+.prt .v{grid-area:v;font-size:20px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.blk{padding:12px 16px 14px;border-top:2px solid #111;margin-top:8px}
+.blk .t{display:flex;justify-content:space-between;font-size:18px;margin-bottom:8px}
+.blk .t b{font-size:21px;display:block}
+.blk .iz{color:#b3261e}.blk .de{color:#1f4e85;text-align:right}
+.blk .stk{height:20px;margin:0;background:#ddd}
+.blk .stk i{width:3px;margin-left:-1.5px;background:#111;top:-5px;bottom:-5px}
+.blk .mid{text-align:center;font-size:14px;color:#444;margin-top:6px}
+.blk .def{font-size:15px;color:#333;margin-top:10px;line-height:1.45}
+.nod{padding:14px 16px 16px;font-size:17px;color:#222;line-height:1.5}
+#legend{padding:10px 12px}
+#legend .t{font-size:15px;color:#111}
+#legend .row span{width:30px;height:16px}
+#legend .lbl{width:240px;font-size:14px;color:#222}
+#legend .ex{font-size:14px;color:#222}
+#legend .ex span{width:30px;height:16px}
+#source{font-size:13px}
+.maplibregl-ctrl-group button{width:42px;height:42px}
+@media (max-width:600px){
+  html,body{font-size:16px}
+  #title{font-size:19px}
+  #picker{padding:10px}
+  #picker label{width:100%}
+  #picker .selwrap{max-width:none;min-width:0}
+  #picker select{font-size:18px}
+  #warn{font-size:14px}
+  #info{width:auto}
+  #info{background:#fff;max-height:55%}
+  .prt .r{grid-template-columns:1fr auto;grid-template-areas:"n v" "b b";align-items:baseline;row-gap:4px;padding:7px 0 9px}
+  .prt .bar{height:12px}
+  #info:not(.open){max-height:60px}
+  #source{bottom:68px}
+  .maplibregl-ctrl-bottom-right,.maplibregl-ctrl-bottom-left{bottom:62px}
+  #info .hint{font-size:16px;padding:16px 12px}
+  #stage{display:flex;flex-direction:column}
+  #map{position:relative;inset:auto;flex:1;min-height:280px}
+  #legend{position:relative;inset:auto;order:-1;z-index:1;box-shadow:none!important;background:#fff;border-bottom:1px solid #ccc;padding:8px 12px 10px}
+  #legend .t{display:block;font-size:14px;margin-bottom:5px}
+  #legend .row span{flex:1;width:auto;height:14px}
+  #legend .lbl{width:auto;font-size:14px}
+  #legend .ex{font-size:14px;margin-top:7px;gap:0}
+  #legend .ex span{width:16px;height:14px}
+  #legend .ex span:last-of-type{margin-right:8px}
+}
 </style>
 </head>
 <body>
 <div id="wrap">
   <h1 id="title"></h1>
   <div id="tabs"></div>
+  <div id="picker"><label for="eleccion">Elija las elecciones:</label><div class="selwrap"><select id="eleccion"></select></div></div>
   <div id="warn"><span id="warntxt"></span><a href="#" id="mlink">Metodología</a></div>
   <div id="stage">
   <div id="map"></div>
   <div id="method" class="panel"><button id="mclose" title="Cerrar">&times;</button><b>Metodología</b><p id="methodtxt"></p></div>
-  <div id="info" class="panel"><div class="hint">Pasa el ratón o toca una sección para ver los resultados</div></div>
+  <div id="info" class="panel"><div class="hint">Toque una zona del mapa (o pase el ratón por encima) para ver cómo votó</div></div>
   <div id="legend" class="panel">
     <div class="t">Ventaja del ganador (puntos)</div>
     <div class="row" id="lgrow"></div>
@@ -259,47 +336,41 @@ var META = {};
 Object.keys(GEOS).forEach(function(g){ META[g] = {}; GEOS[g].features.forEach(function(f){ META[g][f.properties.cusec] = f.properties; }); });
 function props(c){ var m = META[YEARS[cur].geo][c]; if (!m) return null; var o = {}, d = YEARS[cur].data[c]; for (var k in m) o[k] = m[k]; for (var k2 in d) o[k2] = d[k2]; return o; }
 
+var FECHA = {'28O 1982':'28 de octubre de 1982','22J 1986':'22 de junio de 1986','29O 1989':'29 de octubre de 1989',
+  '6J 1993':'6 de junio de 1993','3M 1996':'3 de marzo de 1996','12M 2000':'12 de marzo de 2000','14M 2004':'14 de marzo de 2004',
+  '9M 2008':'9 de marzo de 2008','20N 2011':'20 de noviembre de 2011','20D 2015':'20 de diciembre de 2015','26J 2016':'26 de junio de 2016',
+  '28A 2019':'28 de abril de 2019','10N 2019':'10 de noviembre de 2019','23J 2023':'23 de julio de 2023'};
+function fecha(Y){ return FECHA[Y.tab] || Y.tab; }
+// Qué partidos forman cada bloque, sacado de la nota de cada elección
+function bloques(Y){
+  return (Y.note || '').split(' · ').filter(function(t){ return /^(Izquierda|Derecha):|fuera de bloques/.test(t); }).join('. ') + '.';
+}
+function head(p, bg, extra){
+  return '<div class="hd" style="background:' + bg + '"><button class="x" title="Cerrar" aria-label="Cerrar" onclick="window.__closeInfo()">&times;</button>' +
+    '<div class="m">' + p.mun + '</div>' +
+    '<div class="l2">Distrito ' + parseInt(p.dis,10) + ' · Sección ' + parseInt(p.sec,10) + '</div>' + (extra || '') + '</div>';
+}
 function show(p){
   var Y = YEARS[cur];
   if (p.nodata) {
-    info.innerHTML = '<div class="hd" style="background:#777"><button class="x" title="Cerrar" onclick="window.__closeInfo()">&times;</button>' +
-      '<div><span class="m">' + p.mun + '</span><span class="pr">Alicante · ' + Y.tab + '</span></div>' +
-      '<div class="l2">Distrito ' + parseInt(p.dis,10) + ' · Sección ' + parseInt(p.sec,10) + '</div></div>' +
-      '<div style="padding:10px 12px 12px;font-size:13px;color:#444">Sin datos en ' + Y.tab + ': esta sección no existía con este código. Se creó más tarde dividiendo otra, y sus electores votaban entonces en la sección de la que procede.</div>';
+    info.innerHTML = head(p, '#666') +
+      '<div class="nod">No hay datos de esta zona en las elecciones del ' + fecha(Y) + '. Entonces formaba parte de otra sección.</div>';
+    info.classList.add('open');
     return;
   }
-  var h = '<div class="hd" style="background:' + (p.hc || '#333') + '">' +
-    '<button class="x" title="Cerrar" onclick="window.__closeInfo()">&times;</button>' +
-    '<div><span class="m">' + p.mun + '</span><span class="pr">Alicante · ' + Y.tab + '</span></div>' +
-    '<div class="l2">Distrito ' + parseInt(p.dis,10) + ' · Sección ' + parseInt(p.sec,10) + '</div>' +
-    '<div class="l2">Gana ' + p.ganador + ' por ' + fmt(p.dif) + ' pts | Participación: ' + fmt(p.part) + '%</div></div>';
-  h += '<div class="stk">';
-  p.rows.forEach(function(q){ h += '<span style="width:' + q[2] + '%;background:' + q[1] + '"></span>'; });
-  h += '<i></i></div>';
-  h += '<table class="res"><tr><th></th><th>PCT. VOTO</th>' + (Y.votes ? '<th>VOTOS</th>' : '') + (Y.delta ? '<th>+/−</th>' : '') + '</tr>';
+  var h = head(p, p.hc || '#333', '<div class="l2">Partido más votado: <b>' + p.ganador + '</b></div>');
+  h += '<div class="prt">';
   p.rows.forEach(function(q){
-    var win = q[0].toUpperCase() === p.ganador.toUpperCase();
-    h += '<tr' + (win ? ' class="w"' : '') + '><td class="n"><span class="dot" style="background:' + q[1] + '"></span>' + q[0] +
-         '</td><td><b>' + fmt(q[2]) + '</b>%</td>' +
-         (Y.votes ? '<td>' + (q[3] == null ? '—' : q[3].toLocaleString('es-ES')) + '</td>' : '') +
-         (Y.delta ? '<td>' + (q[4] == null ? '—' : sgn(q[4])) + '</td>' : '') + '</tr>';
+    if (q[0] === 'Otros' && !q[2]) return;
+    h += '<div class="r"><span class="n"><i style="background:' + q[1] + '"></i>' + q[0] + '</span>' +
+         '<span class="bar"><span style="width:' + q[2] + '%;background:' + q[1] + '"></span></span>' +
+         '<span class="v">' + fmt(q[2]) + '%</span></div>';
   });
-  h += '</table>';
-  h += '<div class="blq"><span class="iz">Izquierda <b>' + fmt(p.iz) + '%</b></span><span class="de">Derecha <b>' + fmt(p.de) + '%</b></span></div>';
-  h += '<div class="stk b"><span style="width:' + p.iz + '%;background:#e05a4f"></span><span style="flex:1;background:#ddd"></span><span style="width:' + p.de + '%;background:#5a7fa8"></span><i></i></div>';
-  if (p.resto && p.resto.length) {
-    h += '<details class="resto"><summary>Resto de candidaturas (' + p.resto.length + ')</summary><table class="res">';
-    p.resto.forEach(function(r){ var v = p.st[3]; h += '<tr><td class="n">' + r[0] + '</td><td>' + fmt(r[1] / v * 100) + '%</td><td>' + r[1].toLocaleString('es-ES') + '</td></tr>'; });
-    h += '</table></details>';
-  }
-  if (p.st) {
-    var st = p.st, cell = function(l, n, pc){ return '<div><span>' + l + '</span><b>' + n.toLocaleString('es-ES') + '</b>' + (pc == null ? '' : '<i>' + fmt(pc) + '%</i>') + '</div>'; };
-    h += '<div class="sth">Participación</div><div class="stg">' + cell('Censo', st[0]) + cell('Votantes', st[1], st[1] / st[0] * 100) +
-      cell('Abstención', st[2], st[2] / st[0] * 100) + cell('Válidos', st[3], st[3] / st[1] * 100) + cell('En blanco', st[4], st[4] / st[3] * 100) +
-      cell('Nulos', st[5], st[5] / st[1] * 100) + '</div>';
-  }
-  h += hist(p.cusec);
-  h += '<div class="pnote">' + Y.note + '</div>';
+  h += '</div>';
+  h += '<div class="blk"><div class="t"><span class="iz">Izquierda<b>' + fmt(p.iz) + '%</b></span><span class="de">Derecha<b>' + fmt(p.de) + '%</b></span></div>';
+  h += '<div class="stk"><span style="width:' + p.iz + '%;background:#d4473c"></span><span style="flex:1;background:#ddd"></span><span style="width:' + p.de + '%;background:#3a6ea8"></span><i></i></div>';
+  h += '<div class="mid">La raya negra marca la mitad</div>';
+  h += '<div class="def">' + bloques(Y) + '</div></div>';
   info.innerHTML = h;
   info.classList.add('open');
 }
@@ -361,10 +432,11 @@ window.__closeInfo = function(){ selected = null; hovered = null; updateHL(); in
 // ---------- Pestañas ----------
 function setYear(i){
   cur = i;
-  Array.prototype.forEach.call(document.querySelectorAll('#tabs button'), function(b, j){ b.className = j === i ? 'on' : ''; });
-  var tb = document.querySelectorAll('#tabs button')[i]; if (tb) { var T = document.getElementById('tabs'); T.scrollLeft = tb.offsetLeft - T.clientWidth / 2 + tb.clientWidth / 2; }
+  document.getElementById('eleccion').value = String(i);
   if (map.getSource('secciones')) map.getSource('secciones').setData(featuresFor(i));
-  document.getElementById('lgextra').innerHTML = YEARS[i].legend_extra || '';
+  var lx = YEARS[i].legend_extra || '';
+  if (window.matchMedia('(max-width:600px)').matches) lx = lx.replace(/\s*\(\+0 a \+40\)/g, '').replace(/&nbsp;/g, '');
+  document.getElementById('lgextra').innerHTML = lx;
   document.getElementById('source').textContent = YEARS[i].source;
   var w = document.getElementById('warntxt'); w.textContent = YEARS[i].warn || ''; 
   document.getElementById('warn').className = YEARS[i].warn ? 'on' : '';
@@ -372,10 +444,12 @@ function setYear(i){
   hovered = null; updateHL();
   refreshPanel();
 }
-var tabs = document.getElementById('tabs');
-YEARS.forEach(function(Y, i){
-  var b = document.createElement('button'); b.textContent = Y.tab; b.onclick = function(){ setYear(i); }; tabs.appendChild(b);
+var sel = document.getElementById('eleccion');
+// Las más recientes, arriba
+YEARS.map(function(Y, i){ return i; }).reverse().forEach(function(i){
+  var o = document.createElement('option'); o.value = String(i); o.textContent = fecha(YEARS[i]); sel.appendChild(o);
 });
+sel.onchange = function(){ setYear(parseInt(sel.value, 10)); };
 setYear(cur);
 document.getElementById('methodtxt').textContent = METHOD;
 document.getElementById('mlink').onclick = function(e){ e.preventDefault(); document.getElementById('method').style.display = 'block'; };

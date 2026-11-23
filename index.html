@@ -136,6 +136,81 @@ b{font-weight:700}
   #legend{bottom:10px;right:10px;padding:6px 8px}
   .outro{font-size:17px;padding:36px 18px 10px}.method{padding:10px 18px 40px}
 }
+
+/* ===== Mapa del reportaje: leyenda y rótulos más legibles ===== */
+#legend{font-size:14px;padding:10px 12px;color:#222}
+#legend .row span{width:28px;height:14px}
+#legend .lbl{font-size:13px;color:#222}
+#legend .ex{font-size:14px;color:#222}
+#legend .ex i{width:14px;height:13px}
+.maplabel{font-size:13px}
+.maplabel.sm{font-size:12px}
+@media (max-width:899px){
+  #legend{left:0;right:0;bottom:0;padding:6px 12px 8px;background:#fff;box-shadow:0 -1px 0 #ccc;font-size:13px}
+  #legend .row span{flex:1;width:auto;height:12px}
+  #legend .lbl{font-size:13px;margin-top:2px}
+  #lgex{display:flex;flex-wrap:wrap;column-gap:14px}
+  #lgex>div:not(.ex){width:100%;margin-top:2px}
+  #legend .ex{font-size:13px;margin-top:4px}
+  #legend .ex i{width:12px;height:12px}
+  .maplabel{font-size:12px}
+  .maplabel.sm{font-size:11.5px}
+}
+
+/* ===== Scrollytelling a pantalla completa, tarjetas centradas (estilo El Confidencial) ===== */
+#scrolly{display:block;border-top:0}
+#graphic{position:sticky;top:0;width:100%;height:100vh;height:100svh;box-shadow:none}
+#steps{position:relative;z-index:6;width:100%;margin-top:-100vh;margin-top:-100svh;background:transparent;pointer-events:none}
+.step,.step:first-child{min-height:120vh;min-height:120svh;display:flex;align-items:center;justify-content:center;padding:0 16px;box-sizing:border-box}
+.step:first-child{padding-top:30svh;align-items:flex-start}
+.step:last-child{min-height:130vh;min-height:130svh}
+.card,.step.active .card{opacity:1}
+.card{pointer-events:auto;max-width:580px;width:100%;box-sizing:border-box;background:#fff;border:1px solid #111;padding:22px 30px 24px;
+  font-size:19px;line-height:1.6;color:#111;text-align:center;transition:none}
+.card .act{color:#b5121b;text-align:center}
+.card .note{text-align:left;color:#444;font-size:14.5px}
+.card .where{text-align:left;font-size:15px;color:#222}
+.card .where summary{text-align:center}
+.card .where b.h{font-size:13px;color:#555}
+.cleg{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;font-size:15px;font-style:italic;color:#111;
+  margin:-4px 0 14px;padding-bottom:12px;border-bottom:1px dashed #bbb}
+.cleg .g{display:inline-flex;align-items:center;gap:6px;font-style:italic}
+.cleg .sc{display:inline-flex}.cleg .sc i{width:16px;height:12px;display:block}
+.cleg .k{display:inline-flex;align-items:center;gap:6px}
+.cleg .k i{display:inline-block;width:12px;height:12px}
+.cleg .tt{width:100%;font-style:normal;font-weight:700;font-size:14px}
+#legend{display:none!important}
+#yearbadge{left:16px;right:auto;top:16px;font:700 17px var(--f);letter-spacing:0;color:#fff;background:#111;padding:6px 11px;text-shadow:none}
+#maptag{position:absolute;left:16px;top:56px;z-index:5;background:#111;color:#fff;font:italic 15px var(--f);padding:5px 10px;transition:opacity .4s}
+#scrollhint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:5;background:rgba(255,255,255,.92);border-radius:20px;
+  padding:7px 16px;font:15px var(--f);color:#333;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:opacity .4s;white-space:nowrap}
+#graphic .maplibregl-ctrl-bottom-left{bottom:0}
+@media (max-width:899px){
+  #graphic{width:100%;height:100vh;height:100svh;box-shadow:none}
+  #steps{width:100%}
+  .step,.step:first-child{min-height:115svh;padding:0 14px;align-items:center}
+  .step:first-child{padding-top:30svh;align-items:flex-start}
+  .card{font-size:17px;line-height:1.6;padding:18px 18px 20px;max-width:none}
+  .cleg{font-size:14px;gap:5px 12px}
+  #yearbadge{font-size:15px;top:12px;left:12px;padding:5px 9px}
+  #maptag{font-size:14px;top:46px;left:12px;padding:4px 9px}
+}
+
+/* Escenas de gráficos: el gráfico y la tarjeta no se tapan */
+@media (min-width:900px){
+  .step.side{justify-content:flex-start;padding-left:4vw}
+  .step.side .card{max-width:430px}
+  #c-vs,#c-evo,#c-gap,#c-pend,#c-scatter,#c-parts{justify-content:flex-end}
+  #c-vs .inner,#c-evo .inner,#c-gap .inner,#c-pend .inner,#c-scatter .inner,#c-parts .inner{width:54%;max-width:720px;margin-right:4vw}
+}
+
+/* Metodología plegada */
+details.method summary{cursor:pointer;list-style:none;font:700 16px var(--f);color:#111;padding:12px 0;border-top:1px dashed #bbb;border-bottom:1px dashed #bbb}
+details.method summary::-webkit-details-marker{display:none}
+details.method summary:after{content:' ▾';color:#b5121b}
+details.method[open] summary:after{content:' ▴'}
+details.method summary:focus-visible{outline:3px solid #f5b400;outline-offset:2px}
+details.method p{margin:12px 0 0;font-size:15px;line-height:1.6;color:#444}
 </style></head><body>
 <header>
   <div class="kicker">Inicio <span>▸</span> Elecciones <span>▸</span> Elda y Petrer <span>▸</span></div>
@@ -151,7 +226,7 @@ b{font-weight:700}
 <section id="scrolly">
   <div id="graphic">
     <div id="map"></div>
-    <div id="yearbadge"></div>
+    <div id="yearbadge"></div><div id="maptag"></div><div id="scrollhint">↓ Siga bajando para avanzar</div>
     <div id="polaroid"><img alt=""><p></p></div>
     <div id="legend"><div class="row" id="lgrow"></div><div class="lbl"><span>PSOE +40</span><span>Empate</span><span>PP +40</span></div><div id="lgex"></div></div>
     <div class="layer" id="c-vs"><div class="inner"><h3 id="vs-t"></h3><p class="sub" id="vs-s"></p><div id="vs"></div></div></div>
@@ -169,11 +244,11 @@ b{font-weight:700}
 
 <section class="outro">
   <h2>Busque su sección</h2>
-  <p>Recorra las elecciones generales desde 1982 en el mapa: pulse en cualquier sección para ver sus resultados y cómo han cambiado respecto a la elección anterior.</p>
+  <p>Recorra las elecciones generales desde 1982 en el mapa: pulse en cualquier sección para ver el porcentaje de cada partido y el reparto entre izquierda y derecha.</p>
 </section>
 <iframe class="explore" id="explore" src="mapa_elda_petrer_generales.html" loading="lazy" title="Mapa de resultados por sección censal"></iframe>
 <div class="captwrap"><span class="capt">Resultados de las elecciones generales por sección censal. Mapa: elaboración propia con datos del Ministerio del Interior.</span></div>
-<p class="method"><b>Metodología.</b> Los resultados por sección censal proceden de los datos por mesa electoral del Ministerio del Interior y de la Generalitat Valenciana, agregados por sección. De las elecciones de 1977 y 1979 solo hay resultados por municipio. Los porcentajes se calculan sobre el voto válido (candidaturas más voto en blanco). Para comparar en el tiempo, los partidos se agrupan por familias: AP, CD y CP se cuentan como PP; PCE, EUPV y sus coaliciones, como IU; y Podemos, Unidas Podemos y sus coaliciones con Compromís, como Podemos. Cada elección desde 2004 se dibuja con la cartografía del INE de su año (2004 y 2008) o con la de 2023; de 1982 a 2000 se usa la de 2001, la primera digitalizada, por lo que algunas secciones aparecen sin datos y otras pudieron cambiar de límites. Los barrios y calles de referencia proceden del callejero del censo electoral del INE y de OpenStreetMap. Los resultados de España proceden del Ministerio del Interior. Partido gobernante: el que formó Gobierno tras cada elección.</p>
+<details class="method"><summary>Metodología</summary><p>Los resultados por sección censal proceden de los datos por mesa electoral del Ministerio del Interior y de la Generalitat Valenciana, agregados por sección. De las elecciones de 1977 y 1979 solo hay resultados por municipio. Los porcentajes se calculan sobre el voto válido (candidaturas más voto en blanco). Para comparar en el tiempo, los partidos se agrupan por familias: AP, CD y CP se cuentan como PP; PCE, EUPV y sus coaliciones, como IU; y Podemos, Unidas Podemos y sus coaliciones con Compromís, como Podemos. Cada elección desde 2004 se dibuja con la cartografía del INE de su año (2004 y 2008) o con la de 2023; de 1982 a 2000 se usa la de 2001, la primera digitalizada, por lo que algunas secciones aparecen sin datos y otras pudieron cambiar de límites. Los barrios y calles de referencia proceden del callejero del censo electoral del INE y de OpenStreetMap. Los resultados de España proceden del Ministerio del Interior. Partido gobernante: el que formó Gobierno tras cada elección.</p></details>
 
 <script>/**
  * MapLibre GL JS
@@ -247,7 +322,7 @@ var fmt = function(n){ return n.toLocaleString('es-ES', {minimumFractionDigits: 
 ['#b2182b','#d6604d','#f4a582','#fddbc7','#d1e5f0','#92c5de','#4393c3','#2166ac'].forEach(function(c){
   var s = document.createElement('span'); s.style.background = c; document.getElementById('lgrow').appendChild(s); });
 var MOB = function(){ return window.innerWidth < 900; };
-var GH = function(){ return document.getElementById('graphic').clientHeight; };
+var GH = function(){ var h = document.getElementById('graphic').clientHeight; return MOB() ? Math.round(h * 0.6) : h; };
 
 // ---------- Mapa ----------
 var map = new maplibregl.Map({container: 'map', style: 'https://tiles.openfreemap.org/styles/positron', bounds: S.bounds,
@@ -259,9 +334,12 @@ var RASTER = {version: 8, sources: {ign: {type: 'raster', tileSize: 256, attribu
 var fellBack = false;
 map.on('error', function(){ if (!map.getSource('secA') && !fellBack) { fellBack = true; map.setStyle(RASTER, {diff: false}); } });
 setTimeout(function(){ if (!map.getSource('secA') && !fellBack) { fellBack = true; map.setStyle(RASTER, {diff: false}); } }, 8000);
-function pad(){ return MOB() ? {top: 46, bottom: 40, left: 14, right: 14} : {top: 60, bottom: 50, left: 40, right: 40}; }
+function pad(){ return MOB() ? {top: 70, bottom: 40, left: 14, right: 14} : {top: 70, bottom: 50, left: 60, right: 60}; }
 var firstMap = SCENES.filter(function(s){ return s.year; })[0];
 var current = null, markers = [], lastSig = null;
+var MESES = {'28O 1982':'Octubre','22J 1986':'Junio','29O 1989':'Octubre','6J 1993':'Junio','3M 1996':'Marzo','12M 2000':'Marzo','14M 2004':'Marzo',
+  '9M 2008':'Marzo','20N 2011':'Noviembre','20D 2015':'Diciembre','26J 2016':'Junio','28A 2019':'Abril','10N 2019':'Noviembre','23J 2023':'Julio'};
+function badgeOf(t){ return MESES[t] ? MESES[t] + ' ' + t.slice(-4) : t; }
 function fc(scene){
   var Y = S.years[YI[scene.year]];
   return {type: 'FeatureCollection', features: S.geos[Y.geo].features.map(function(f){
@@ -662,7 +740,7 @@ function setLayer(k){ ['vs', 'evo', 'gap', 'pend', 'clip', 'mont', 'scatter', 'p
 function show(i){
   var s = SCENES[i], isMap = !!s.year && !s.layer;
   setLayer(s.layer); evoTipHide(); document.getElementById('pendtip').style.display = 'none'; document.getElementById('scattip').style.display = 'none'; document.getElementById('parttip').style.display = 'none';
-  document.getElementById('yearbadge').style.opacity = isMap ? 1 : 0;
+  document.getElementById('yearbadge').style.opacity = isMap ? 1 : 0; document.getElementById('maptag').style.opacity = isMap ? 1 : 0;
   document.getElementById('legend').style.opacity = isMap && !s.alwaysColors ? 1 : 0;
   var po = document.getElementById('polaroid');
   if (s.polaroid) { var pi = po.querySelector('img'); if (pi.getAttribute('src') !== s.polaroid.img) pi.src = s.polaroid.img; po.querySelector('p').innerHTML = s.polaroid.cap; po.classList.add('on'); }
@@ -687,7 +765,8 @@ function show(i){
   if (!isMap) return;
   current = s;
   var Y = S.years[YI[s.year]];
-  document.getElementById('yearbadge').textContent = s.badge || Y.tab;
+  document.getElementById('yearbadge').textContent = s.badge || badgeOf(Y.tab);
+  document.getElementById('maptag').textContent = s.ohio ? 'Aciertos con el partido que gobernó' : 'Quién ganó y por cuánto';
   var ex = (X.ext[String(s.year)] || []);
   document.getElementById('lgrow').style.display = s.ohio ? 'none' : '';
   document.querySelector('#legend .lbl').style.display = s.ohio ? 'none' : '';
@@ -712,18 +791,37 @@ function show(i){
     map.fitBounds(b, {padding: pad(), duration: 1400, maxZoom: s.maxZoom || 15});
   } else map.fitBounds(S.bounds, {padding: pad(), duration: 1400});
 }
-var steps = document.querySelectorAll('.step'), active = -1, io;
+var GRAD = ['#b2182b','#d6604d','#f4a582','#fddbc7','#d1e5f0','#92c5de','#4393c3','#2166ac'];
+function cardLegend(s){
+  if (!s.year) return '';
+  var Y = S.years[YI[s.year]];
+  if (s.ohio) return '<div class="cleg"><span class="tt">Veces que la sección votó al partido que acabó gobernando</span>' +
+    OHIO.map(function(o){ return '<span class="k"><i style="background:' + o[1] + ';outline:1px solid #ccc"></i>' + o[2] + '</span>'; }).join('') + '</div>';
+  if (s.alwaysColors) return '<div class="cleg"><span class="k"><i style="background:#b2182b"></i>Siempre PSOE</span><span class="k"><i style="background:#2166ac"></i>Siempre PP</span></div>';
+  var h = '<div class="cleg"><span class="g">Gana PSOE <span class="sc">' + GRAD.map(function(c){ return '<i style="background:' + c + '"></i>'; }).join('') + '</span> Gana PP</span>';
+  (X.ext[String(s.year)] || []).forEach(function(e){ h += '<span class="k"><i style="background:' + e[1] + '"></i>Gana ' + e[0] + '</span>'; });
+  if (Y.geo === '2001') h += '<span class="k"><i style="background:#d4d4d4"></i>Sin datos</span>';
+  return h + '<span class="k" style="font-size:.9em;color:#444">Cuanto más oscuro, más ventaja</span></div>';
+}
+var CHARTS = {vs: 1, evo: 1, gap: 1, pend: 1, scatter: 1, parts: 1};
+document.querySelectorAll('.step').forEach(function(st){
+  var sc = SCENES[+st.getAttribute('data-s')], c = st.querySelector('.card');
+  if (sc && CHARTS[sc.layer]) st.classList.add('side');
+  if (sc && c) c.insertAdjacentHTML('afterbegin', cardLegend(sc));
+});
+var steps = document.querySelectorAll('.step'), active = -1, io, io2;
+function onEnter(entries){ entries.forEach(function(e){ if (!e.isIntersecting) return;
+  var i = +e.target.closest('.step').getAttribute('data-s');
+  if (i !== active) { active = i; steps.forEach(function(s){ s.classList.toggle('active', +s.getAttribute('data-s') === i); }); show(i);
+    document.getElementById('scrollhint').style.opacity = i === 0 ? 1 : 0; } }); }
 function observe(){
-  if (io) io.disconnect();
-  io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if (!e.isIntersecting) return;
-      var i = +e.target.getAttribute('data-s');
-      if (i !== active) { active = i; steps.forEach(function(s){ s.classList.toggle('active', +s.getAttribute('data-s') === i); }); show(i); } });
-  }, {rootMargin: MOB() ? '-62% 0px -22% 0px' : '-45% 0px -45% 0px'});
-  steps.forEach(function(s){ io.observe(s); });
+  if (io) io.disconnect(); if (io2) io2.disconnect();
+  // Mapas: la escena cambia con la tarjeta en el centro. Gráficos en móvil: en cuanto la tarjeta asoma por abajo
+  io = new IntersectionObserver(onEnter, {rootMargin: '-45% 0px -45% 0px'});
+  io2 = new IntersectionObserver(onEnter, {rootMargin: '-60% 0px -36% 0px'});
+  steps.forEach(function(s){ var c = s.querySelector('.card') || s; (MOB() && s.classList.contains('side') ? io2 : io).observe(c); });
 }
 observe(); show(0);
-if (!MOB()) document.querySelectorAll('details.where').forEach(function(d){ d.open = true; });
 
 var lastW = window.innerWidth;
 window.addEventListener('resize', function(){ if (Math.abs(window.innerWidth - lastW) < 2) return; lastW = window.innerWidth; drawCharts(); observe(); if (active >= 0) show(active); });
