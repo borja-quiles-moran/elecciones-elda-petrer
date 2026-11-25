@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Cómo han votado nuestros barrios? Las elecciones generales en Elda y Petrer desde 1977, calle a calle</title><link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet"><style>
+:root{--f:Futura,"Futura PT",Jost,"Century Gothic",sans-serif;--psoe:#e30613;--pp:#1d5fa8}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:#000;font-family:var(--f);font-weight:300}
+
+/* ---------- Gráficos (modo incrustado y vista previa) ---------- */
+.gr{position:relative;display:flex;flex-direction:column;width:100%;background:#fff;color:#000;margin:0;font-family:var(--f)}
+.gr .hd{padding:0 0 8px}
+.gr h3{font:700 20px/1.25 var(--f);margin:0 0 4px}
+.gr .sub{font:300 15px/1.4 var(--f);color:#222;margin:0 0 8px}
+.gr .key{display:flex;flex-wrap:wrap;gap:4px 14px;font:400 14px/1.3 var(--f);color:#111}
+.gr .key span{display:inline-flex;align-items:center;gap:6px}
+.gr .key i{display:inline-block;width:13px;height:13px;flex:none}
+.gr .key i.ln{height:3px;width:18px;background:#111}
+.gr .key i.es{background:#fff;outline:1.5px solid #111;outline-offset:-1.5px}
+.gr .bd{flex:1;min-height:0;position:relative}
+.gr svg{display:block;overflow:visible}
+.gr svg text{font-family:var(--f)}
+.gr .ft{font:300 13px/1.35 var(--f);color:#444;padding-top:6px;border-top:1px solid #ddd;margin-top:4px}
+.gr .ax text{font-size:13px;fill:#333}
+.gr .tip{position:absolute;display:none;pointer-events:none;background:#fff;border:1px solid #111;padding:8px 10px;font:400 14px/1.45 var(--f);color:#111;min-width:170px;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.gr .tip b{display:block;font-weight:700;margin-bottom:3px}
+.gr .tip .r{display:flex;justify-content:space-between;gap:14px}
+.gr .tip .r i{display:inline-block;width:10px;height:10px;margin-right:6px}
+.gr .hint{font:300 13px var(--f);color:#555;margin-top:4px}
+
+/* Controles del gráfico del reparto */
+.gr .ctl{display:flex;flex-wrap:wrap;gap:8px 14px;margin:2px 0 10px}
+.gr .seg{display:inline-flex;border:1.5px solid #111;background:#fff}
+.gr .seg button{appearance:none;border:0;border-left:1.5px solid #111;background:#fff;cursor:pointer;padding:8px 12px;font:400 14px/1.2 var(--f);color:#111;min-height:38px}
+.gr .seg button:first-child{border-left:0}
+.gr .seg button[aria-pressed=true]{background:#111;color:#fff;font-weight:700}
+.gr .seg button:focus-visible{outline:3px solid #f5b400;outline-offset:1px}
+.gr .s-bip{display:none}
+.gr.is-bip .s-bip{display:inline}
+.gr.is-bip .s-all{display:none}
+.gr .rkey{gap:3px 12px}
+.gr .bipnote{width:100%;font-weight:300;font-size:14px;color:#222;margin-bottom:2px}
+.gr .ctl{margin-top:6px}
+@media (max-width:600px){ .gr .seg button{padding:8px 9px;font-size:13.5px} .gr .ctl{gap:6px} }
+
+/* Modo incrustado: el gráfico ocupa todo el iframe */
+body.solo{overflow:hidden}
+body.solo .gr{height:100vh;padding:2px 2px 4px}
+body.solo #art{display:none}
+
+/* ---------- Vista previa con el estilo de Valle de Elda ---------- */
+#art{max-width:760px;margin:0 auto;padding:22px 16px 60px}
+#art .crumbs{font:700 12px var(--f);color:#000;margin-bottom:10px}
+#art .crumbs span{font-size:8px;margin:0 5px;vertical-align:1px}
+#art h1{font:700 32px/1.15 var(--f);margin:0 0 12px}
+#art .lead{font:300 19px/1.45 var(--f);margin:0 0 14px;color:#111}
+#art .meta{font:300 13px var(--f);color:#555;padding:10px 0;border-top:1px dashed #bbb;margin-bottom:18px}
+#art .meta b{font-weight:300;padding-right:8px;margin-right:8px;border-right:1px solid #bbb}
+#art figure.ph{margin:0 0 22px;position:relative}
+#art figure.ph img{display:block;width:100%;height:auto}
+#art figure.ph figcaption{background:#111;color:#fff;font:700 12.5px/1.4 var(--f);padding:6px 8px}
+#art p{font:300 16px/1.65 var(--f);margin:0 0 16px}
+#art p b,#art p strong{font-weight:700}
+#art p.it{margin:28px 0 12px}
+#art .emb{margin:24px 0 26px}
+#art iframe{display:block;width:100%;border:0}
+#art figure.hueco{margin:0 0 22px}
+#art figure.hueco div{aspect-ratio:3/2;background:#e9e9e9;border:2px dashed #aaa;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:16px;font:300 15px/1.4 var(--f);color:#444}
+#art figure.hueco span{font:700 17px var(--f);color:#222}
+#art figure.hueco figcaption{background:#111;color:#fff;font:700 12.5px/1.4 var(--f);padding:6px 8px}
+#art details.met{border-top:1px dashed #bbb;border-bottom:1px dashed #bbb;margin:26px 0 0}
+#art details.met summary{cursor:pointer;list-style:none;font:700 16px var(--f);padding:12px 0}
+#art details.met summary::-webkit-details-marker{display:none}
+#art details.met summary:after{content:' ▾';color:#b5121b}
+#art details.met[open] summary:after{content:' ▴'}
+#art details.met p{font-size:14px;color:#333;margin:0 0 14px}
+#art .note{border:1px dashed #999;background:#fafafa;padding:10px 12px;font:300 14px/1.5 var(--f);margin:0 0 20px;color:#333}
+@media (max-width:600px){
+  #art h1{font-size:26px}
+  #art .lead{font-size:17px}
+  .gr h3{font-size:18px}
+  .gr .sub{font-size:14px}
+  .gr .key{font-size:13px;gap:3px 11px}
+}
+
+#art details{margin:24px 0}
+.aviso{border:1px dashed #999;background:#fafafa;padding:10px 12px;font:300 14px/1.5 var(--f);margin:0 0 20px;color:#333}
+</style></head><body>
+<article id="art">
+  <div class="aviso">Vista previa del reportaje tal como quedaría en Valle de Elda. El texto es el definitivo; los gráficos y mapas se cargan desde GitHub Pages.</div>
+  <h1>¿Cómo han votado nuestros barrios? Las elecciones generales en Elda y Petrer desde 1977, calle a calle</h1>
+  <p class="lead">En cuarenta años, nuestras ciudades siempre han votado al PSOE más que el resto de España, aunque Elda se adelantó al cambio de voto hacia el PP en la década de 1990.</p>
+  <div class="meta"><b>Borja Quiles Morán</b>El Valle en datos</div>
+  <figure class="ph"><img src="https://static2.valledeelda.com/media/k2/items/cache/4369f792db26507b611522385b04c2c5_XL.jpg" alt="Recuento de votos en el colegio Padre Manjón en 1977"><figcaption>Recuento de votos en el colegio Padre Manjón, el 15 de junio de 1977: las primeras votaciones en libertad tras 41 años. Foto: Valle de Elda.</figcaption></figure>
+
+<p>El próximo domingo 29 de noviembre, miles de vecinos de Elda y Petrer están llamados a las urnas para decidir la composición del Congreso y el Senado. Desde el restablecimiento de la democracia, nuestras ciudades han vivido quince elecciones generales, además de la de 1977 para las Cortes constituyentes. Al final de este reportaje puede buscar su sección en el mapa y ver cómo ha votado su barrio desde 1982.</p>
+
+<p><strong>1977 y 1979: el PSOE gana aquí; la UCD, en España</strong></p>
+
+<p>En la primera votación de la democracia, Elda y Petrer votaron de forma distinta al resto del país. En España ganó la UCD de Adolfo Suárez, con el 34,4 % de los votos. Aquí arrasó el PSOE: <strong>48,4 %</strong> entre las dos ciudades y más del 52 % en Petrer.</p>
+
+<p>Dos años después, la historia se repitió: la UCD volvió a ganar en España y, aquí, el PSOE con el 43 % de los votos. El PCE se acercó al 14 %, tres puntos por encima de su media nacional. El presidente del Gobierno volvió a ser Adolfo Suárez, quien había estado en Elda varios meses antes.</p>
+
+<p style="color: #b00020; font-weight: bold;">[HUECO PARA FOTO: Sugerencia: Adolfo Suárez en su visita a Elda (archivo de Valle de Elda).]</p>
+
+<p><strong>1982: la gran victoria socialista</strong></p>
+
+<p>El 28 de octubre de 1982, el PSOE de Felipe González ganó su primera mayoría absoluta. Esa semana, Valle de Elda lo contaba en su portada: «Triunfo rotundo del PSOE en la Provincia de Alicante».</p>
+
+<p><img src="https://borja-quiles-moran.github.io/elecciones-elda-petrer/img/portada_valle_de_elda_1982.jpg" alt="Portada de Valle de Elda, 29 de octubre de 1982: «Triunfo rotundo del PSOE en la Provincia de Alicante»." style="width: 100%; height: auto;" /></p>
+<p><em>Portada de Valle de Elda, 29 de octubre de 1982: «Triunfo rotundo del PSOE en la Provincia de Alicante».</em></p>
+
+<p>Ese día, el PSOE consiguió el <strong>61 %</strong> de los votos en Elda y Petrer, trece puntos más que en España. Fue el más votado en 51 de las 57 secciones. Votó el 86 % del censo, la participación más alta de todas las elecciones en la historia de la democracia.</p>
+
+<p>En algunas zonas, tres de cada cuatro votantes eligieron al PSOE. El récord, un 80 %, fue para una sección del norte de Elda que incluía la Huerta Nueva, la Tafalera y la zona de la calle Numancia. En otras cinco, entre ellas El Calíu, superó el 75 %.</p>
+
+<p>Solo en seis secciones de ambas ciudades no ganó el PSOE, sino Alianza Popular, con entre el 44 % y el 53 % de los votos: cinco en Elda, en El Progreso, La Fraternidad y el centro, y una en el centro de Petrer, junto a la avenida Joaquín Poveda.</p>
+
+<p>La hegemonía socialista aguantó varias elecciones más. En 1986, el PSOE sacó el 54 % de los votos y ganó en 49 secciones. La novedad fue el CDS de Suárez, que superó el 10 %. La ligera bajada del PSOE marcó el inicio de un cambio de tendencia.</p>
+
+<p>En la década de los noventa, España giró hacia la derecha. Y en Elda el cambio llegó antes que en el resto del país.</p>
+
+<p><img src="https://borja-quiles-moran.github.io/elecciones-elda-petrer/img/valle_de_elda_1993.jpg" alt="Valle de Elda, 4 de junio de 1993: «El domingo, elecciones generales»." style="width: 100%; height: auto;" /></p>
+<p><em>Valle de Elda, 4 de junio de 1993: «El domingo, elecciones generales».</em></p>
+
+<p>En 1993, Felipe González ganó sus cuartas elecciones, pero en Elda el partido más votado ya fue el PP de Aznar: 44 % frente al 38 % del PSOE. Petrer siguió siendo socialista (42 % frente a 38 %). El mapa quedó dividido: 29 secciones para el PP y 28 para el PSOE.</p>
+
+<p>El semanario Vivir en Elda lo resumió así: «El PSOE se mantuvo, el PP dobló sus votos, el CDS se derrumbó e IU subió ligeramente». El PP pasó de 10.305 votos en 1989 a 20.776 en 1993 en el conjunto de las dos ciudades.</p>
+
+<p>En 1996, José María Aznar ganó sus primeras elecciones generales por apenas un punto en España. En Elda el PP repitió victoria (44 % frente a 41 %). Petrer, en cambio, siguió siendo socialista (44 % frente a 38 %).</p>
+
+<p>En 1989 el PSOE aún le sacaba 18 puntos al PP en Elda; en 1993, el PP ya iba seis por delante: un vuelco de casi 24 puntos en cuatro años. En Petrer, el PP no adelantó al PSOE hasta 2000, con la mayoría absoluta de Aznar.</p>
+
+<p><iframe src="https://borja-quiles-moran.github.io/elecciones-elda-petrer/grafico_pendulo.html" title="Gráfico: ventaja del PP sobre el PSOE en cada elección general" width="100%" height="480" loading="lazy" scrolling="no" style="display: block; width: 100%; height: 480px !important; border: 0;"></iframe></p>
+
+<p><strong>2000-2011: el PP se asienta</strong></p>
+
+<p>En el año 2000, el PP alcanzó el 52 % de los votos en Elda y el 48 % en Petrer y ganó en 46 de las 62 secciones.</p>
+
+<p style="color: #b00020; font-weight: bold;">[HUECO PARA FOTO: Sugerencia: noche electoral de 2000 o de 2011 en Elda o Petrer.]</p>
+
+<p>El 14 de marzo de 2004, tres días después de los atentados del 11-M, José Luis Rodríguez Zapatero ganó en España con casi cinco puntos de ventaja sobre el PP. En Elda y Petrer, en cambio, el PP siguió siendo el partido más votado: 47 % frente a 43 % en Elda y 45 % frente a 43 % en Petrer. En 2008 sucedió algo similar: el PSOE fue el más votado en 38 de las 67 secciones, pero en votos ganó el PP en las dos ciudades, con el 47 % frente al 45 %.</p>
+
+<p>En 2011, en plena crisis, el mapa se volvió azul. El PP fue el partido más votado en 63 de 67 secciones y en todas las de Petrer. Fue su mayor victoria: 25.266 votos, su récord, y 19 puntos de ventaja sobre el PSOE.</p>
+
+<p>Durante tres décadas, casi todo el voto fue para dos partidos. Desde 1982, PP y PSOE nunca bajaron del 70 % de los votos válidos en Elda y Petrer, y en 2008 llegaron a sumar el <strong>92 %</strong>, su máximo.</p>
+
+<p><iframe src="https://borja-quiles-moran.github.io/elecciones-elda-petrer/grafico_reparto.html" title="Gráfico: votos en las elecciones generales en Elda y Petrer" width="100%" height="580" loading="lazy" scrolling="no" style="display: block; width: 100%; height: 580px !important; border: 0;"></iframe></p>
+
+<p><strong>Llegan los nuevos partidos</strong></p>
+
+<p>Tras la crisis económica y las movilizaciones del 15-M, Podemos surgió como nueva alternativa en la izquierda y Ciudadanos como la opción del centro político. En 2015, el tablero cambió de golpe: Podemos-Compromís logró el 22,6 % y Ciudadanos el 17,5 %, más que su media en España (13,9 %). PP y PSOE se quedaron en el 52 %.</p>
+
+<p><img src="https://static1.valledeelda.com/images/noticias/2015/diciembre/4/IMG_3945-1.jpg" alt="Los dos ediles de Compromís siguen los resultados de Compromís-Podemos en su sede, en diciembre de 2015. Foto: Jesús Cruces." style="width: 100%; height: auto;" /></p>
+<p><em>Los dos ediles de Compromís siguen los resultados de Compromís-Podemos en su sede, en diciembre de 2015. Foto: Jesús Cruces.</em></p>
+
+<p>Por primera vez, el mapa tuvo otros colores. Podemos-Compromís fue la fuerza más votada en 8 secciones, tres en Elda y cinco en Petrer, y Ciudadanos, en dos de Petrer. En Petrer, Podemos-Compromís superó incluso al PSOE en el total del municipio.</p>
+
+<p>En abril de 2019, el PSOE recuperó el mapa: ganó en 57 secciones. Ciudadanos fue segundo, con el 21,6 %, y el más votado en seis: las urbanizaciones de Petrer (Almafrá, Loma Badà y Salinetas) y tres secciones de Elda. Siete meses después, en la repetición electoral, VOX se disparó hasta el 17,8 %, casi tres puntos más que en España, y fue el más votado en una sección: la extensa zona rural al oeste de Elda.</p>
+
+<p><strong>2023: el reverso de España</strong></p>
+
+<p>El 23 de julio de 2023, Pedro Sánchez perdió las elecciones en votos frente al PP de Alberto Núñez Feijóo, pero conservó la presidencia del Gobierno. En Elda y Petrer, los socialistas tuvieron motivos para celebrar: el PSOE fue el más votado en 46 de las 67 secciones.</p>
+
+<p><img src="https://static2.valledeelda.com/media/k2/items/cache/1a27d91a26f5fc5668474585a0ab81ed_XL.jpg" alt="Los socialistas celebran el resultado de las elecciones generales de 2023 en Elda. Foto: Nando Verdú." style="width: 100%; height: auto;" /></p>
+<p><em>Los socialistas celebran el resultado de las elecciones generales de 2023 en Elda. Foto: Nando Verdú.</em></p>
+
+<p>En España ganó el PP (33,1 % frente a 31,7 %), mientras que aquí la fuerza ganadora fue el PSOE (36,8 % frente a 33,8 %). VOX sacó más de dos puntos por encima de su resultado nacional, y Sumar solo consiguió mejorar la media española en Petrer.</p>
+
+<p><iframe src="https://borja-quiles-moran.github.io/elecciones-elda-petrer/grafico_2023.html" title="Gráfico: elecciones generales de 2023 en Elda, Petrer y España" width="100%" height="500" loading="lazy" scrolling="no" style="display: block; width: 100%; height: 500px !important; border: 0;"></iframe></p>
+
+<p><strong>Los barrios que nunca cambian</strong></p>
+
+<p>Desde 2008, en siete elecciones, solo 8 secciones han votado siempre al mismo partido: 4 al PP y 4 al PSOE. Algunas están a pocas calles unas de otras. En el centro de Elda, El Progreso, La Fraternidad y la zona de la plaza Sagasta han votado siempre al PP; a unos cientos de metros, la zona de la calle El Huerto y la de la calle Aurita González (antes, Alféreces Provisionales) han sido siempre del PSOE. En Petrer, la zona más fiel al PP ha sido la de la avenida Joaquín Poveda.</p>
+
+<p><iframe src="https://borja-quiles-moran.github.io/elecciones-elda-petrer/mapa_barrios.html?m=siempre" title="Mapa: secciones que han votado siempre al mismo partido desde 2008" width="100%" height="680" loading="lazy" scrolling="no" style="display: block; width: 100%; height: 680px !important; border: 0;"></iframe></p>
+
+<p><strong>¿Hay un «Ohio» en Elda y Petrer?</strong></p>
+
+<p>En Estados Unidos, Ohio fue durante décadas el estado que mejor anticipaba quién ganaría. Aquí ninguna sección ha votado siempre al partido que acabó gobernando, pero una se ha quedado muy cerca: la sección 10 del distrito 5 de Elda, en torno a las calles Acacias, Agustín Cavero, Los Álamos y Magallanes, acertó en 13 de las 14 elecciones desde 1982.</p>
+
+<p>Su único fallo fue en 1993: votó al PP cuando en España ganó Felipe González. Desde 2004, ni esta ni la sección 5 del distrito 4 de Petrer, en San Rafael y el Guirney, han fallado nunca: votaron a Zapatero, a Rajoy y a Sánchez cuando estos acabaron ocupando la Moncloa.</p>
+
+<p><iframe src="https://borja-quiles-moran.github.io/elecciones-elda-petrer/mapa_barrios.html?m=ohio" title="Mapa: secciones que más aciertan quién gobernará" width="100%" height="680" loading="lazy" scrolling="no" style="display: block; width: 100%; height: 680px !important; border: 0;"></iframe></p>
+
+<p><strong>Busque su sección</strong></p>
+
+<p>Cuarenta y nueve años después de aquel recuento en el colegio Padre Manjón, Elda y Petrer vuelven a las urnas. ¿Cómo ha votado su barrio desde 1982? Elija las elecciones en el desplegable y pulse en su zona del mapa para ver el porcentaje de cada partido y el reparto entre izquierda y derecha.</p>
+
+<p><iframe src="https://borja-quiles-moran.github.io/elecciones-elda-petrer/mapa_elda_petrer_generales.html" title="Mapa: resultados de las elecciones generales por sección censal" width="100%" height="820" loading="lazy" scrolling="no" style="display: block; width: 100%; height: 820px !important; border: 0;"></iframe></p>
+
+<details style="border-top: 1px dashed #bbb; border-bottom: 1px dashed #bbb; margin: 24px 0;"><summary style="cursor: pointer; font-weight: bold; padding: 12px 0;">Metodología ▾</summary>
+<p style="font-size: 14px;">Los resultados por sección censal proceden de los datos por mesa electoral del Ministerio del Interior y de la Generalitat Valenciana, agregados por sección. De las elecciones de 1977 y 1979 solo hay resultados por municipio. Los porcentajes se calculan sobre el voto válido (candidaturas más voto en blanco).</p>
+<p style="font-size: 14px;">Para comparar en el tiempo, los partidos se agrupan por familias: AP, CD y CP se cuentan como PP; PCE, EUPV y sus coaliciones, como IU; y Podemos, Unidas Podemos y sus coaliciones con Compromís, como Podemos.</p>
+<p style="font-size: 14px;">Cada elección desde 2004 se dibuja con la cartografía del INE de su año (2004 y 2008) o con la de 2023; de 1982 a 2000 se usa la de 2001, por lo que algunas secciones aparecen sin datos y otras pudieron cambiar de límites. Los barrios y calles de referencia proceden del callejero del censo electoral del INE y de OpenStreetMap. Los resultados de España proceden del Ministerio del Interior. Partido gobernante: el que formó Gobierno tras cada elección.</p>
+</details>
+
+</article></body></html>
