@@ -303,12 +303,25 @@ var feats = {type: 'FeatureCollection', features: GEO.features.map(function(f){ 
   return {type: 'Feature', geometry: f.geometry, properties: {cusec: f.properties.cusec, col: s ? s.fill : (M.fills[f.properties.cusec] || '#eeeeee'), on: s ? 1 : 0}}; })};
 
 var VECTOR = 'https://tiles.openfreemap.org/styles/positron';
-var RASTER = {version: 8, sources: {
-  base: {type: 'raster', tileSize: 256, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+var BASE = {version: 8, sources: {
+  ign: {type: 'raster', tileSize: 256, maxzoom: 19, attribution: 'Mapa base: <a href="https://www.ign.es">IGN</a> (CC BY 4.0)',
+    tiles: ['https://www.ign.es/wmts/ign-base?layer=IGNBaseTodo&style=default&tilematrixset=GoogleMapsCompatible&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}']},
+  carto: {type: 'raster', tileSize: 256, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
     tiles: ['a', 'b', 'c', 'd'].map(function(s){ return 'https://' + s + '.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png'; })},
-  labels: {type: 'raster', tileSize: 256,
+  cartol: {type: 'raster', tileSize: 256,
     tiles: ['a', 'b', 'c', 'd'].map(function(s){ return 'https://' + s + '.basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}.png'; })}},
-  layers: [{id: 'base', type: 'raster', source: 'base'}, {id: 'carto-labels', type: 'raster', source: 'labels'}]};
+  layers: [{id: 'ign', type: 'raster', source: 'ign', paint: {'raster-saturation': -0.85, 'raster-contrast': 0.08}},
+           {id: 'carto', type: 'raster', source: 'carto', layout: {visibility: 'none'}},
+           {id: 'carto-labels', type: 'raster', source: 'cartol', layout: {visibility: 'none'}}]};
+// Si el IGN no responde (ninguna tesela en 7 s o varios errores seguidos), pasa a CARTO sin recargar nada
+function watchBase(m){
+  var ok = false, errs = 0, done = false;
+  function toCarto(){ if (done || ok) return; done = true;
+    try { m.setLayoutProperty('ign', 'visibility', 'none'); m.setLayoutProperty('carto', 'visibility', 'visible'); m.setLayoutProperty('carto-labels', 'visibility', 'visible'); } catch (err) {} }
+  m.on('data', function(e){ if (e.sourceId === 'ign' && e.tile) ok = true; });
+  m.on('error', function(e){ if (e && e.sourceId === 'ign' && !ok && ++errs >= 4) toCarto(); });
+  setTimeout(toCarto, 7000);
+}
 // Solo es fallo del fondo si falla el propio estilo, no una tesela, una fuente o un icono
 function styleBroken(e){ var u = (e && e.error && (e.error.url || e.error.message)) || ''; return !(e && (e.sourceId || e.tile)) && !/sprite|glyph|font|pbf|tiles\//i.test(u); }
 // Nombres de calle legibles sobre los colores
@@ -326,12 +339,13 @@ function enhanceBase(m){ (m.getStyle().layers || []).forEach(function(l){ try {
 } catch (err) {} }); }
 var mob = window.innerWidth < 600;
 // Mapa fijo: sin arrastrar ni hacer zoom, para que no "atrape" el dedo dentro del iframe. Solo se toca.
-var map = new maplibregl.Map({container: 'bmap', style: VECTOR, bounds: b, fitBoundsOptions: {padding: mob ? 26 : 40},
+var map = new maplibregl.Map({container: 'bmap', style: BASE, bounds: b, fitBoundsOptions: {padding: mob ? 26 : 40},
   attributionControl: false, dragPan: false, scrollZoom: false, boxZoom: false, dragRotate: false, keyboard: false,
   doubleClickZoom: false, touchZoomRotate: false, touchPitch: false});
 map.addControl(new maplibregl.AttributionControl({compact: true}), 'bottom-right');
 var fellBack = false;
-function fallback(){ if (!fellBack) { fellBack = true; map.setStyle(RASTER); } }
+function fallback(){}
+watchBase(map);
 var timer = setTimeout(function(){ if (!map.getSource('s')) fallback(); }, 12000);
 map.on('error', function(e){ if (!map.getSource('s') && !fellBack && styleBroken(e)) fallback(); });
 window.addEventListener('resize', function(){ map.fitBounds(sel ? bboxOf(sel) : b, {padding: sel ? 50 : (window.innerWidth < 600 ? 26 : 40), maxZoom: 16.5, animate: false}); });
@@ -341,7 +355,7 @@ function addData(){
   var before; map.getStyle().layers.some(function(l){ if (l.type === 'symbol' || /^(road|highway|transportation|building|carto-labels)/.test(l.id)) { before = l.id; return true; } });
   enhanceBase(map);
   map.addSource('s', {type: 'geojson', data: feats});
-  map.addLayer({id: 'fill', type: 'fill', source: 's', paint: {'fill-color': ['get', 'col'], 'fill-opacity': ['case', ['==', ['get', 'on'], 1], 0.66, M.otherOpacity]}}, before);
+  map.addLayer({id: 'fill', type: 'fill', source: 's', paint: {'fill-color': ['get', 'col'], 'fill-opacity': ['case', ['==', ['get', 'on'], 1], 0.62, M.otherOpacity]}}, before);
   map.addLayer({id: 'line', type: 'line', source: 's', paint: {'line-color': ['case', ['==', ['get', 'on'], 1], '#fff', '#b5b5b5'], 'line-width': ['case', ['==', ['get', 'on'], 1], 1.5, 0.6]}}, before);
   map.addSource('lim', {type: 'geojson', data: LIM});
   map.addLayer({id: 'lim', type: 'line', source: 'lim', paint: {'line-color': '#111', 'line-width': 2, 'line-dasharray': [3, 2]}});

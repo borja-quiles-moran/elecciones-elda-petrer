@@ -325,15 +325,29 @@ var MOB = function(){ return window.innerWidth < 900; };
 var GH = function(){ var h = document.getElementById('graphic').clientHeight; return MOB() ? Math.round(h * 0.6) : h; };
 
 // ---------- Mapa ----------
-var map = new maplibregl.Map({container: 'map', style: 'https://tiles.openfreemap.org/styles/positron', bounds: S.bounds,
+var BASE = {version: 8, sources: {
+  ign: {type: 'raster', tileSize: 256, maxzoom: 19, attribution: 'Mapa base: <a href="https://www.ign.es">IGN</a> (CC BY 4.0)',
+    tiles: ['https://www.ign.es/wmts/ign-base?layer=IGNBaseTodo&style=default&tilematrixset=GoogleMapsCompatible&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}']},
+  carto: {type: 'raster', tileSize: 256, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    tiles: ['a', 'b', 'c', 'd'].map(function(s){ return 'https://' + s + '.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png'; })},
+  cartol: {type: 'raster', tileSize: 256,
+    tiles: ['a', 'b', 'c', 'd'].map(function(s){ return 'https://' + s + '.basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}.png'; })}},
+  layers: [{id: 'ign', type: 'raster', source: 'ign', paint: {'raster-saturation': -0.85, 'raster-contrast': 0.08}},
+           {id: 'carto', type: 'raster', source: 'carto', layout: {visibility: 'none'}},
+           {id: 'carto-labels', type: 'raster', source: 'cartol', layout: {visibility: 'none'}}]};
+// Si el IGN no responde (ninguna tesela en 7 s o varios errores seguidos), pasa a CARTO sin recargar nada
+function watchBase(m){
+  var ok = false, errs = 0, done = false;
+  function toCarto(){ if (done || ok) return; done = true;
+    try { m.setLayoutProperty('ign', 'visibility', 'none'); m.setLayoutProperty('carto', 'visibility', 'visible'); m.setLayoutProperty('carto-labels', 'visibility', 'visible'); } catch (err) {} }
+  m.on('data', function(e){ if (e.sourceId === 'ign' && e.tile) ok = true; });
+  m.on('error', function(e){ if (e && e.sourceId === 'ign' && !ok && ++errs >= 4) toCarto(); });
+  setTimeout(toCarto, 7000);
+}
+var map = new maplibregl.Map({container: 'map', style: BASE, bounds: S.bounds,
   fitBoundsOptions: {padding: pad()}, interactive: false, attributionControl: false});
 map.addControl(new maplibregl.AttributionControl({compact: true}), 'bottom-left');
-var RASTER = {version: 8, sources: {
-  base: {type: 'raster', tileSize: 256, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    tiles: ['a', 'b', 'c', 'd'].map(function(s){ return 'https://' + s + '.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png'; })},
-  labels: {type: 'raster', tileSize: 256,
-    tiles: ['a', 'b', 'c', 'd'].map(function(s){ return 'https://' + s + '.basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}.png'; })}},
-  layers: [{id: 'base', type: 'raster', source: 'base'}, {id: 'carto-labels', type: 'raster', source: 'labels'}]};
+
 // Solo es fallo del fondo si falla el propio estilo, no una tesela, una fuente o un icono
 function styleBroken(e){ var u = (e && e.error && (e.error.url || e.error.message)) || ''; return !(e && (e.sourceId || e.tile)) && !/sprite|glyph|font|pbf|tiles\//i.test(u); }
 // Nombres de calle legibles sobre los colores
@@ -350,8 +364,7 @@ function enhanceBase(m){ (m.getStyle().layers || []).forEach(function(l){ try {
   else if (l.type === 'fill' && /^building/.test(id)) m.setPaintProperty(id, 'fill-opacity', 0.18);
 } catch (err) {} }); }
 var fellBack = false;
-map.on('error', function(e){ if (!map.getSource('secA') && !fellBack && styleBroken(e)) { fellBack = true; map.setStyle(RASTER, {diff: false}); } });
-setTimeout(function(){ if (!map.getSource('secA') && !fellBack) { fellBack = true; map.setStyle(RASTER, {diff: false}); } }, 12000);
+watchBase(map);
 function pad(){ return MOB() ? {top: 70, bottom: 40, left: 14, right: 14} : {top: 70, bottom: 50, left: 60, right: 60}; }
 var firstMap = SCENES.filter(function(s){ return s.year; })[0];
 var current = null, markers = [], lastSig = null;
@@ -381,7 +394,7 @@ function addLayers(){
   ['A', 'B'].forEach(function(k){
     var vis = k === BUF;
     map.addSource('sec' + k, {type: 'geojson', data: vis ? fc(current || firstMap) : {type: 'FeatureCollection', features: []}});
-    map.addLayer({id: 'fill' + k, type: 'fill', source: 'sec' + k, paint: {'fill-color': ['get', 'rc'], 'fill-opacity': vis ? 0.66 : 0, 'fill-opacity-transition': {duration: FADE}}}, before);
+    map.addLayer({id: 'fill' + k, type: 'fill', source: 'sec' + k, paint: {'fill-color': ['get', 'rc'], 'fill-opacity': vis ? 0.62 : 0, 'fill-opacity-transition': {duration: FADE}}}, before);
     map.addLayer({id: 'line' + k, type: 'line', source: 'sec' + k, paint: {'line-color': '#fff', 'line-width': 0.8, 'line-opacity': vis ? 1 : 0, 'line-opacity-transition': {duration: FADE}}}, before);
   });
   if (!map.hasImage('hatch')) { var n = 12, d = new Uint8Array(n * n * 4);
@@ -401,7 +414,7 @@ function swapMap(data){
   if (!map.getSource('secA')) return;
   var nb = BUF === 'A' ? 'B' : 'A';
   map.getSource('sec' + nb).setData(data);
-  map.setPaintProperty('fill' + nb, 'fill-opacity', 0.66); map.setPaintProperty('line' + nb, 'line-opacity', 1); map.setPaintProperty('hl' + nb, 'line-opacity', 1);
+  map.setPaintProperty('fill' + nb, 'fill-opacity', 0.62); map.setPaintProperty('line' + nb, 'line-opacity', 1); map.setPaintProperty('hl' + nb, 'line-opacity', 1);
   map.setPaintProperty('fill' + BUF, 'fill-opacity', 0); map.setPaintProperty('line' + BUF, 'line-opacity', 0); map.setPaintProperty('hl' + BUF, 'line-opacity', 0);
   BUF = nb;
 }
