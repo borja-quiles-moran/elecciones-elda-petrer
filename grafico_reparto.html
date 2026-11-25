@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Así se ha repartido el voto · Elda y Petrer</title>
+<title>Votos en las elecciones generales en Elda y Petrer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
@@ -44,6 +44,8 @@ html,body{margin:0;padding:0;background:#fff;color:#000;font-family:var(--f);fon
 .gr.is-bip .s-bip{display:inline}
 .gr.is-bip .s-all{display:none}
 .gr .rkey{gap:3px 12px}
+.gr .bipnote{width:100%;font-weight:300;font-size:14px;color:#222;margin-bottom:2px}
+.gr .ctl{margin-top:6px}
 @media (max-width:600px){ .gr .seg button{padding:8px 9px;font-size:13.5px} .gr .ctl{gap:6px} }
 
 /* Modo incrustado: el gráfico ocupa todo el iframe */
@@ -107,7 +109,7 @@ var FUENTE = 'Fuente: Ministerio del Interior. Elaboración propia.';
 
 // Estructura común: título, subtítulo, clave, gráfico y fuente
 function frame(box, o){
-  box.innerHTML = '<div class="hd"><h3>' + o.t + '</h3><p class="sub">' + o.s + '</p>' + (o.key ? '<div class="key">' + o.key + '</div>' : '') + '</div>' +
+  box.innerHTML = '<div class="hd"><h3>' + o.t + '</h3>' + (o.s ? '<p class="sub">' + o.s + '</p>' : '') + (o.key ? '<div class="key">' + o.key + '</div>' : '') + '</div>' +
     '<div class="bd"></div>' + (o.hint ? '<div class="hint">' + o.hint + '</div>' : '') + '<div class="ft">' + (o.ft || FUENTE) + '</div><div class="tip"></div>';
   var bd = box.querySelector('.bd');
   return {bd: bd, W: bd.clientWidth, H: Math.max(180, bd.clientHeight), tip: box.querySelector('.tip'), box: box};
@@ -122,7 +124,7 @@ function showTip(f, html, ev){
 
 // 1. El péndulo: ventaja del PP sobre el PSOE
 function pendulo(box){
-  var f = frame(box, {t: 'El péndulo: ¿quién iba por delante?', s: 'Ventaja del PP sobre el PSOE en cada elección general, en puntos. Hacia arriba gana el PP; hacia abajo, el PSOE.',
+  var f = frame(box, {t: 'Ventaja del PP sobre el PSOE en cada elección general, en puntos. Hacia arriba gana el PP; hacia abajo, el PSOE.', s: '',
     key: chip('#555', 'Elda') + chip('rgba(85,85,85,.45)', 'Petrer') + '<span><i class="ln"></i>España</span>', hint: 'Toque o pase el ratón por un año para ver las cifras'});
   var W = f.W, H = f.H, n = W < 560, M = {t: 44, r: 4, b: 36, l: 34}, w = W - M.l - M.r, h = H - M.t - M.b;
   var svg = E('svg', {width: W, height: H}, f.bd), g = E('g', {transform: 'translate(' + M.l + ',' + M.t + ')'}, svg);
@@ -170,17 +172,17 @@ function reparto(box){
   var DS = {ambos: D.ambos, elda: D.elda, petrer: D.petrer};
   var seg = function(name, opts){ return '<div class="seg" role="group" aria-label="' + name + '">' + opts.map(function(o){
     return '<button type="button" data-k="' + o[0] + '" data-v="' + o[1] + '">' + o[2] + '</button>'; }).join('') + '</div>'; };
-  var f = frame(box, {t: 'Así se ha repartido el voto', s: '<span class="s-all">% de votos válidos de cada partido en cada elección general.</span><span class="s-bip">Lo que suman PSOE y PP, en % de votos válidos. En gris, el resto de partidos.</span>',
+  var f = frame(box, {t: 'Votos en las Elecciones Generales en Elda y Petrer', s: '',
     key: '', hint: 'Toque o pase el ratón por una barra para ver todos los partidos'});
   var hd = box.querySelector('.hd');
-  hd.querySelector('.sub').insertAdjacentHTML('afterend', '<div class="ctl">' +
+  hd.querySelector('h3').insertAdjacentHTML('afterend', '<div class="ctl">' +
     seg('Municipio', [['muni', 'ambos', 'Elda y Petrer'], ['muni', 'elda', 'Elda'], ['muni', 'petrer', 'Petrer']]) +
     seg('Vista', [['bip', '0', 'Todos los partidos'], ['bip', '1', 'Fuerza del bipartidismo']]) + '</div><div class="key rkey"></div>');
   var keyEl = hd.querySelector('.rkey');
   function drawKey(){
     var d = DS[RS.muni], used = {};
     D.years.forEach(function(y){ Object.keys(d[String(y)]).forEach(function(k){ if (d[String(y)][k] >= 0.5) used[k] = 1; }); });
-    keyEl.innerHTML = RS.bip ? chip('#e30613', 'PSOE') + chip('#1d5fa8', 'PP') + chip(RESTO, 'Resto de partidos')
+    keyEl.innerHTML = RS.bip ? '<span class="bipnote">Lo que suman PSOE y PP, en % de votos válidos. En gris, el resto de partidos.</span>' + chip('#e30613', 'PSOE') + chip('#1d5fa8', 'PP') + chip(RESTO, 'Resto de partidos')
       : RCATS.filter(function(c){ return used[c[0]]; }).map(function(c){ return chip(c[2], c[1]); }).join('');
     box.classList.toggle('is-bip', RS.bip);
     hd.querySelectorAll('.seg button').forEach(function(b){ var on = String(RS[b.getAttribute('data-k')] === true ? 1 : RS[b.getAttribute('data-k')] === false ? 0 : RS[b.getAttribute('data-k')]) === b.getAttribute('data-v');
@@ -242,7 +244,7 @@ function reparto(box){
 
 // 3. 2023: Elda, Petrer y España
 function vs2023(box){
-  var f = frame(box, {t: '2023: el reverso de España', s: '% de votos válidos en las elecciones generales del 23 de julio de 2023.',
+  var f = frame(box, {t: 'Porcentaje de votos válidos en las elecciones generales del 23 de julio de 2023', s: '',
     key: chip('#555', 'Elda') + chip('rgba(85,85,85,.55)', 'Petrer') + chip('#fff', 'España', 'es')});
   var W = f.W, H = f.H, P = ['PSOE', 'PP', 'VOX', 'Sumar'], L = 64, R = 58;
   var rowsH = H - P.length * 30, bh = Math.max(14, Math.min(26, rowsH / (P.length * 3)));
