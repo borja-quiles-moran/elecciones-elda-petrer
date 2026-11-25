@@ -328,21 +328,12 @@ var GH = function(){ var h = document.getElementById('graphic').clientHeight; re
 var map = new maplibregl.Map({container: 'map', style: 'https://tiles.openfreemap.org/styles/positron', bounds: S.bounds,
   fitBoundsOptions: {padding: pad()}, interactive: false, attributionControl: false});
 map.addControl(new maplibregl.AttributionControl({compact: true}), 'bottom-left');
-var RASTER = {version: 8, sources: {
-  base: {type: 'raster', tileSize: 256, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    tiles: ['a', 'b', 'c', 'd'].map(function(s){ return 'https://' + s + '.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png'; })},
-  labels: {type: 'raster', tileSize: 256,
-    tiles: ['a', 'b', 'c', 'd'].map(function(s){ return 'https://' + s + '.basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}.png'; })}},
-  layers: [{id: 'base', type: 'raster', source: 'base'}, {id: 'carto-labels', type: 'raster', source: 'labels'}]};
-// Solo es fallo del fondo si falla el propio estilo, no una tesela, una fuente o un icono
-function styleBroken(e){ var u = (e && e.error && (e.error.url || e.error.message)) || ''; return !(e && (e.sourceId || e.tile)) && !/sprite|glyph|font|pbf|tiles\//i.test(u); }
-// Nombres de calle legibles sobre los colores
-function enhanceBase(m){ (m.getStyle().layers || []).forEach(function(l){ try {
-  if (l.type === 'symbol' && l.layout && l.layout['text-field']) { m.setPaintProperty(l.id, 'text-color', '#222'); m.setPaintProperty(l.id, 'text-halo-color', '#ffffff'); m.setPaintProperty(l.id, 'text-halo-width', 1.6); }
-} catch (err) {} }); }
+var RASTER = {version: 8, sources: {ign: {type: 'raster', tileSize: 256, attribution: 'Mapa base: IGN',
+  tiles: ['https://www.ign.es/wmts/ign-base?layer=IGNBaseTodo&style=default&tilematrixset=GoogleMapsCompatible&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}']}},
+  layers: [{id: 'ign', type: 'raster', source: 'ign', paint: {'raster-saturation': -1}}]};
 var fellBack = false;
-map.on('error', function(e){ if (!map.getSource('secA') && !fellBack && styleBroken(e)) { fellBack = true; map.setStyle(RASTER, {diff: false}); } });
-setTimeout(function(){ if (!map.getSource('secA') && !fellBack) { fellBack = true; map.setStyle(RASTER, {diff: false}); } }, 12000);
+map.on('error', function(){ if (!map.getSource('secA') && !fellBack) { fellBack = true; map.setStyle(RASTER, {diff: false}); } });
+setTimeout(function(){ if (!map.getSource('secA') && !fellBack) { fellBack = true; map.setStyle(RASTER, {diff: false}); } }, 8000);
 function pad(){ return MOB() ? {top: 70, bottom: 40, left: 14, right: 14} : {top: 70, bottom: 50, left: 60, right: 60}; }
 var firstMap = SCENES.filter(function(s){ return s.year; })[0];
 var current = null, markers = [], lastSig = null;
@@ -367,8 +358,7 @@ var BUF = 'A', FADE = 1100;
 function addLayers(){
   if (map.getSource('secA')) return;
   var layers = map.getStyle().layers, before;
-  for (var i = 0; i < layers.length; i++) if (/^(tunnel|highway|road|bridge|railway|transportation|building|carto-labels)/.test(layers[i].id) || layers[i].type === 'symbol') { before = layers[i].id; break; }
-  enhanceBase(map);
+  for (var i = 0; i < layers.length; i++) if (/^(tunnel|highway|road|bridge|railway|transportation|building)/.test(layers[i].id) || layers[i].type === 'symbol') { before = layers[i].id; break; }
   ['A', 'B'].forEach(function(k){
     var vis = k === BUF;
     map.addSource('sec' + k, {type: 'geojson', data: vis ? fc(current || firstMap) : {type: 'FeatureCollection', features: []}});
