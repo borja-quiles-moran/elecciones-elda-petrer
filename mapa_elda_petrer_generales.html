@@ -170,6 +170,72 @@ html,body{color:#1a1a1a;font-size:17px}
   #legend .ex span{width:16px;height:14px}
   #legend .ex span:last-of-type{margin-right:8px}
 }
+
+/* ===== Versión limpia (estilo de mapa de periódico) ===== */
+body.emb #title{display:none}
+#wrap{min-height:520px}
+#picker{position:absolute;z-index:1001;top:10px;left:52px;right:10px;padding:0;border:0;background:none;display:block}
+#picker label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+#picker .selwrap{max-width:330px;min-width:0}
+#picker select{font-size:16px;padding:8px 40px 8px 12px;background:#111;border:0;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+#picker .selwrap:after{right:15px;width:8px;height:8px;margin-top:-6px;border-width:0 2.5px 2.5px 0}
+#legend{top:60px!important;left:52px!important;right:auto!important;bottom:auto!important;padding:6px 9px 7px!important;width:auto;max-width:calc(100% - 64px)}
+#legend .t{display:block!important;font-size:12px!important;font-weight:700;margin-bottom:4px;color:#222}
+#legend .row span{width:22px!important;height:10px!important}
+#legend .lbl{width:176px!important;font-size:11px!important;color:#333;margin-top:2px}
+#legend .ex{font-size:11px!important;margin-top:4px}
+#legend .ex span{width:22px!important;height:10px!important}
+#warn,#source{display:none!important}
+#foot{flex:none;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 12px;padding:6px 10px 4px;font-size:12px;color:#444;border-top:1px solid #ddd;line-height:1.4}
+#foot .w{display:block;width:100%;color:#6b4f00;background:#fff6dd;padding:3px 6px;margin-bottom:2px}
+#foot a{color:#111;font-weight:700;white-space:nowrap}
+#method{top:auto!important;bottom:10px;transform:translateX(-50%);max-height:70%;overflow:auto;font-size:13px}
+/* Ficha compacta, solo al tocar */
+#info{top:auto!important;bottom:10px;right:10px;width:270px!important;max-height:calc(100% - 120px)}
+#info:not(.open){display:none}
+#info .hd{padding:8px 34px 7px 11px!important}
+#info .hd .m{font-size:16px!important}
+#info .hd .l2{font-size:12.5px!important;margin-top:1px}
+#info .hd .x{width:32px!important;height:32px!important;font-size:22px!important;line-height:30px!important;right:2px!important;top:2px!important}
+.prt{padding:6px 11px 2px!important}
+.prt .r{grid-template-columns:96px 1fr 50px!important;column-gap:8px!important;padding:3px 0!important}
+.prt .n{font-size:13.5px!important}
+.prt .n i{width:9px!important;height:9px!important;margin-right:5px!important}
+.prt .bar{height:8px!important}
+.prt .v{font-size:14px!important}
+.blk{padding:7px 11px 9px!important;margin-top:4px!important;border-top:1px solid #111!important}
+.blk .t{font-size:13px!important;margin-bottom:5px!important}
+.blk .t b{font-size:15px!important;display:inline!important;margin-left:4px}
+.blk .stk{height:10px!important}
+.blk .mid{display:none}
+.blk .def{font-size:11.5px!important;margin-top:6px!important;color:#555}
+.nod{font-size:14px!important;padding:10px 11px!important}
+#hintpill{position:absolute;z-index:1000;left:50%;bottom:14px;transform:translateX(-50%);background:rgba(17,17,17,.88);color:#fff;font-size:14px;padding:7px 14px;border-radius:18px;white-space:nowrap;pointer-events:none;transition:opacity .3s}
+#hintpill.off{opacity:0}
+.maplibregl-cooperative-gesture-screen{font-family:inherit!important;font-size:19px!important;font-weight:700;background:rgba(0,0,0,.55)!important;color:#fff!important}
+.maplibregl-ctrl-group button{width:34px!important;height:34px!important}
+@media (max-width:600px){
+  #picker{left:50px;right:8px;top:8px}
+  #picker .selwrap{max-width:none}
+  #legend{top:56px!important;left:8px!important;max-width:calc(100% - 16px)}
+  #legend .lbl{width:176px!important}
+  #info{left:0!important;right:0!important;bottom:0!important;width:auto!important;max-height:52%!important;border-radius:10px 10px 0 0!important}
+  #info:not(.open){display:none}
+  .maplibregl-ctrl-top-left{top:0}
+  .maplibregl-ctrl-bottom-right,.maplibregl-ctrl-bottom-left{bottom:0!important}
+  #hintpill{font-size:13.5px;bottom:40px}
+  /* Anula la versión anterior, que sacaba la leyenda del mapa en el móvil */
+  #stage{display:block!important}
+  #map{position:absolute!important;inset:0!important;min-height:0!important}
+  #legend{position:absolute!important;order:0!important;left:50px!important;top:56px!important;right:auto!important;box-shadow:0 1px 4px rgba(0,0,0,.2)!important;border:0!important;background:rgba(255,255,255,.95)!important}
+  #legend .row span{flex:none!important;width:20px!important;height:10px!important}
+  #legend .lbl{width:160px!important;margin-top:2px!important}
+  #lgex{display:block!important}
+  /* Ficha: una línea por partido, más compacta */
+  .prt .r{grid-template-columns:92px 1fr 50px!important;grid-template-areas:"n b v"!important;align-items:center!important;row-gap:0!important;padding:3px 0!important}
+  .prt .bar{height:8px!important}
+  #info{max-height:56%!important}
+}
 </style>
 </head>
 <body>
@@ -181,7 +247,8 @@ html,body{color:#1a1a1a;font-size:17px}
   <div id="stage">
   <div id="map"></div>
   <div id="method" class="panel"><button id="mclose" title="Cerrar">&times;</button><b>Metodología</b><p id="methodtxt"></p></div>
-  <div id="info" class="panel"><div class="hint">Toque una zona del mapa (o pase el ratón por encima) para ver cómo votó</div></div>
+  <div id="info" class="panel"></div>
+  <div id="hintpill">Toque una zona para ver sus resultados</div>
   <div id="legend" class="panel">
     <div class="t">Ventaja del ganador (puntos)</div>
     <div class="row" id="lgrow"></div>
@@ -190,6 +257,7 @@ html,body{color:#1a1a1a;font-size:17px}
   </div>
   <div id="source"></div>
   </div>
+  <div id="foot"><span id="fsrc"></span><a href="#" id="mlink2">Metodología ▾</a></div>
 </div>
 <script>
 /**
@@ -312,7 +380,10 @@ function enhanceBase(m){ (m.getStyle().layers || []).forEach(function(l){ try {
 var map = new maplibregl.Map({
   container: 'map', style: BASE, bounds: BOUNDS, fitBoundsOptions: { padding: 10 },
   minZoom: 10, maxZoom: 18, attributionControl: false, dragRotate: false, pitchWithRotate: false,
-  cooperativeGestures: window.matchMedia('(pointer: coarse)').matches
+  cooperativeGestures: true,
+  locale: {'CooperativeGesturesHandler.WindowsHelpText': 'Pulse Ctrl y gire la rueda del ratón para acercar el mapa',
+           'CooperativeGesturesHandler.MacHelpText': 'Pulse ⌘ y gire la rueda del ratón para acercar el mapa',
+           'CooperativeGesturesHandler.MobileHelpText': 'Use dos dedos para mover el mapa'}
 });
 map.touchZoomRotate.disableRotation();
 map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left');
@@ -379,7 +450,9 @@ function head(p, bg, extra){
     '<div class="m">' + p.mun + '</div>' +
     '<div class="l2">Distrito ' + parseInt(p.dis,10) + ' · Sección ' + parseInt(p.sec,10) + '</div>' + (extra || '') + '</div>';
 }
+function pill(on){ var h = document.getElementById('hintpill'); if (h) h.classList.toggle('off', !on); }
 function show(p){
+  pill(false);
   var Y = YEARS[cur];
   if (p.nodata) {
     info.innerHTML = head(p, '#666') +
@@ -437,16 +510,16 @@ function updateHL(){
   map.setFilter('sec-hl', ['in', ['get', 'cusec'], ['literal', ids.length ? ids : ['']]]);
 }
 function refreshPanel(){
-  var c = hovered || selected, p = c ? props(c) : null;
-  if (p) show(p); else { info.innerHTML = HINT; info.classList.remove('open'); }
+  var c = selected, p = c ? props(c) : null;
+  if (p) show(p); else { info.innerHTML = ''; info.classList.remove('open'); pill(true); }
 }
 
 map.on('mousemove', 'sec-fill', function(e){
   var c = e.features[0].properties.cusec;
   map.getCanvas().style.cursor = 'pointer';
-  if (c !== hovered) { hovered = c; updateHL(); refreshPanel(); }
+  if (c !== hovered) { hovered = c; updateHL(); }
 });
-map.on('mouseleave', 'sec-fill', function(){ map.getCanvas().style.cursor = ''; hovered = null; updateHL(); refreshPanel(); });
+map.on('mouseleave', 'sec-fill', function(){ map.getCanvas().style.cursor = ''; hovered = null; updateHL(); });
 function selectAt(pt){
   var f = map.getLayer('sec-fill') ? map.queryRenderedFeatures(pt, { layers: ['sec-fill'] }) : [];
   if (f.length) { selected = f[0].properties.cusec; hovered = null; updateHL(); show(props(selected)); }
@@ -456,7 +529,7 @@ map.on('click', function(e){ selectAt(e.point); });
 var t0 = null;
 map.on('touchstart', function(e){ t0 = e.points && e.points.length === 1 ? e.point : null; });
 map.on('touchend', function(e){ if (t0 && Math.abs(e.point.x - t0.x) < 10 && Math.abs(e.point.y - t0.y) < 10) selectAt(e.point); t0 = null; });
-window.__closeInfo = function(){ selected = null; hovered = null; updateHL(); info.innerHTML = HINT; info.classList.remove('open'); };
+window.__closeInfo = function(){ selected = null; hovered = null; updateHL(); info.innerHTML = ''; info.classList.remove('open'); pill(true); };
 
 // ---------- Pestañas ----------
 function setYear(i){
@@ -467,6 +540,7 @@ function setYear(i){
   if (window.matchMedia('(max-width:600px)').matches) lx = lx.replace(/\s*\(\+0 a \+40\)/g, '').replace(/&nbsp;/g, '');
   document.getElementById('lgextra').innerHTML = lx;
   document.getElementById('source').textContent = YEARS[i].source;
+  document.getElementById('fsrc').innerHTML = (YEARS[i].warn ? '<span class="w">' + YEARS[i].warn + '</span>' : '') + YEARS[i].source;
   var w = document.getElementById('warntxt'); w.textContent = YEARS[i].warn || ''; 
   document.getElementById('warn').className = YEARS[i].warn ? 'on' : '';
   if (selected && !META[YEARS[i].geo][selected]) selected = null;
@@ -483,6 +557,13 @@ setYear(cur);
 document.getElementById('methodtxt').textContent = METHOD;
 document.getElementById('mlink').onclick = function(e){ e.preventDefault(); document.getElementById('method').style.display = 'block'; };
 document.getElementById('mclose').onclick = function(){ document.getElementById('method').style.display = 'none'; };
+document.getElementById('mlink2').onclick = function(e){ e.preventDefault(); var m = document.getElementById('method'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; };
+// Dentro de un iframe (en la noticia) se oculta el título: ya lo da el artículo
+try { if (window.self !== window.top) document.body.classList.add('emb'); } catch (e) { document.body.classList.add('emb'); }
+document.getElementById('stage').appendChild(document.getElementById('picker'));
+// El hueco del mapa cambia al mover el selector: que el mapa ocupe todo su espacio
+map.resize(); map.on('load', function(){ map.resize(); });
+if (window.ResizeObserver) new ResizeObserver(function(){ map.resize(); }).observe(document.getElementById('stage'));
 })();
 
 </script>
