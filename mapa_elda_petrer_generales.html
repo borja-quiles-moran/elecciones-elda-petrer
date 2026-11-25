@@ -274,13 +274,18 @@ function sgn(n){ return (n > 0 ? '+' : n < 0 ? '−' : '') + fmt(Math.abs(n)); }
 
 // ---------- Mapas base ----------
 var VECTOR = 'https://tiles.openfreemap.org/styles/positron';
-var RASTER = {
-  version: 8,
-  sources: { ign: { type: 'raster', tileSize: 256,
-    tiles: ['https://www.ign.es/wmts/ign-base?layer=IGNBaseTodo&style=default&tilematrixset=GoogleMapsCompatible&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}'],
-    attribution: 'Mapa base: <a href="https://www.ign.es">IGN</a> (CC BY 4.0)' } },
-  layers: [{ id: 'ign', type: 'raster', source: 'ign', paint: { 'raster-saturation': -1, 'raster-brightness-min': 0.1 } }]
-};
+var RASTER = {version: 8, sources: {
+  base: {type: 'raster', tileSize: 256, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    tiles: ['a', 'b', 'c', 'd'].map(function(s){ return 'https://' + s + '.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png'; })},
+  labels: {type: 'raster', tileSize: 256,
+    tiles: ['a', 'b', 'c', 'd'].map(function(s){ return 'https://' + s + '.basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}.png'; })}},
+  layers: [{id: 'base', type: 'raster', source: 'base'}, {id: 'carto-labels', type: 'raster', source: 'labels'}]};
+// Solo es fallo del fondo si falla el propio estilo, no una tesela, una fuente o un icono
+function styleBroken(e){ var u = (e && e.error && (e.error.url || e.error.message)) || ''; return !(e && (e.sourceId || e.tile)) && !/sprite|glyph|font|pbf|tiles\//i.test(u); }
+// Nombres de calle legibles sobre los colores
+function enhanceBase(m){ (m.getStyle().layers || []).forEach(function(l){ try {
+  if (l.type === 'symbol' && l.layout && l.layout['text-field']) { m.setPaintProperty(l.id, 'text-color', '#222'); m.setPaintProperty(l.id, 'text-halo-color', '#ffffff'); m.setPaintProperty(l.id, 'text-halo-width', 1.6); }
+} catch (err) {} }); }
 
 var map = new maplibregl.Map({
   container: 'map', style: VECTOR, bounds: BOUNDS, fitBoundsOptions: { padding: 10 },
@@ -294,8 +299,8 @@ map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-rig
 // Si el estilo vectorial no carga en 8 s, se usa el fondo raster del IGN
 var fellBack = false;
 function fallback(){ if (!fellBack) { fellBack = true; map.setStyle(RASTER); } }
-var timer = setTimeout(function(){ if (!map.getSource('secciones')) fallback(); }, 8000);
-map.on('error', function(e){ if (!map.getSource('secciones') && !fellBack) fallback(); });
+var timer = setTimeout(function(){ if (!map.getSource('secciones')) fallback(); }, 12000);
+map.on('error', function(e){ if (!map.getSource('secciones') && !fellBack && styleBroken(e)) fallback(); });
 
 function featuresFor(i){
   return { type: 'FeatureCollection', features: GEOS[YEARS[i].geo].features.map(function(f){
@@ -310,8 +315,9 @@ function addData(){
   var layers = map.getStyle().layers, before;
   // La capa de color va por debajo de calles, edificios y etiquetas
   for (var i = 0; i < layers.length; i++) {
-    if (/^(tunnel|highway|road|bridge|railway|transportation|building|aeroway|boundary)/.test(layers[i].id) || layers[i].type === 'symbol') { before = layers[i].id; break; }
+    if (/^(tunnel|highway|road|bridge|railway|transportation|building|aeroway|boundary|carto-labels)/.test(layers[i].id) || layers[i].type === 'symbol') { before = layers[i].id; break; }
   }
+  enhanceBase(map);
   map.addSource('secciones', { type: 'geojson', data: featuresFor(cur), promoteId: 'cusec' });
   map.addLayer({ id: 'sec-fill', type: 'fill', source: 'secciones',
     paint: { 'fill-color': ['get', 'col'], 'fill-opacity': 0.72 } }, before);
