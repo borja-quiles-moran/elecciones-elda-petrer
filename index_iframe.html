@@ -184,7 +184,7 @@ function showTip(f, html, ev){
 
 // 1. El péndulo: ventaja del PP sobre el PSOE
 function pendulo(box){
-  var f = frame(box, {t: 'Ventaja del PP sobre el PSOE en cada elección general, en puntos. Hacia arriba gana el PP; hacia abajo, el PSOE.', s: '',
+  var f = frame(box, {t: 'Ventaja del PP sobre el PSOE en cada elección general, en puntos', s: 'Hacia arriba gana el PP; hacia abajo, el PSOE.',
     key: chip('#555', 'Elda') + chip('rgba(85,85,85,.45)', 'Petrer') + '<span><i class="ln"></i>España</span>', hint: 'Toque o pase el ratón por un año para ver las cifras'});
   var W = f.W, H = f.H, n = W < 560, M = {t: 44, r: 4, b: 36, l: 34}, w = W - M.l - M.r, h = H - M.t - M.b;
   var svg = E('svg', {width: W, height: H}, f.bd), g = E('g', {transform: 'translate(' + M.l + ',' + M.t + ')'}, svg);
