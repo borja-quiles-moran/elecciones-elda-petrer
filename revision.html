@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revisión de gráficos y mapas · El Valle en datos</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f3f3f3;color:#111;font-family:Futura,"Futura PT",Jost,sans-serif;font-weight:300}
+header{background:#111;color:#fff;padding:18px 24px}
+header h1{margin:0 0 4px;font-size:24px;font-weight:700}
+header p{margin:0;font-size:15px}
+nav{padding:12px 24px;background:#fff;border-bottom:1px solid #ddd;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:15px}
+nav a{color:#111;font-weight:400}
+section{padding:22px 24px 30px;border-bottom:2px solid #ccc}
+section h2{margin:0 0 4px;font-size:21px;font-weight:700}
+.meta{font-size:14px;color:#444;margin:0 0 14px}
+.meta code{background:#fff;padding:1px 5px;border:1px solid #ddd}
+.frames{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+.fr span{display:block;font-size:13px;font-weight:700;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.fr iframe{display:block;border:0;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.d iframe{width:728px;max-width:calc(100vw - 48px)}
+.m iframe{width:360px}
+</style>
+</head>
+<body>
+<header><h1>Revisión de gráficos y mapas</h1><p>El Valle en datos · ¿Cómo han votado nuestros barrios? Cada pieza aparece al ancho de la columna del periódico (728 px) y al de un móvil (360 px), con la altura que tendrá su iframe.</p></header>
+<nav id="nav"></nav>
+<main id="main"></main>
+<script>
+var P = [
+  ['g1', 'Gráfico 1 · El péndulo', 'grafico_pendulo.html', 480],
+  ['g2', 'Gráfico 2 · Así se ha repartido el voto', 'grafico_reparto.html', 500],
+  ['g3', 'Gráfico 3 · 2023: el reverso de España', 'grafico_2023.html', 500],
+  ['m1', 'Mapa 1 · Los barrios que nunca cambian', 'mapa_barrios.html?m=siempre', 680],
+  ['m2', 'Mapa 2 · ¿Hay un «Ohio» en Elda y Petrer?', 'mapa_barrios.html?m=ohio', 680],
+  ['m3', 'Mapa 3 · Explorador por sección', 'mapa_elda_petrer_generales.html', 740]
+];
+var nav = document.getElementById('nav'), main = document.getElementById('main');
+P.forEach(function(p){
+  nav.insertAdjacentHTML('beforeend', '<a href="#' + p[0] + '">' + p[1] + '</a>');
+  main.insertAdjacentHTML('beforeend', '<section id="' + p[0] + '"><h2>' + p[1] + '</h2>' +
+    '<p class="meta">Archivo <code>' + p[2] + '</code> · alto del iframe ' + p[3] + ' px · <a href="' + p[2] + '" target="_blank">abrir sola</a></p>' +
+    '<div class="frames"><div class="fr d"><span>Ordenador</span><iframe loading="lazy" src="' + p[2] + '" height="' + p[3] + '" title="' + p[1] + ' (ordenador)"></iframe></div>' +
+    '<div class="fr m"><span>Móvil</span><iframe loading="lazy" src="' + p[2] + '" height="' + p[3] + '" title="' + p[1] + ' (móvil)"></iframe></div></div></section>');
+});
+</script>
+</body>
+</html>
