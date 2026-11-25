@@ -172,7 +172,7 @@ function reparto(box){
   var DS = {ambos: D.ambos, elda: D.elda, petrer: D.petrer};
   var seg = function(name, opts){ return '<div class="seg" role="group" aria-label="' + name + '">' + opts.map(function(o){
     return '<button type="button" data-k="' + o[0] + '" data-v="' + o[1] + '">' + o[2] + '</button>'; }).join('') + '</div>'; };
-  var f = frame(box, {t: 'Votos en las Elecciones Generales en Elda y Petrer', s: '',
+  var f = frame(box, {t: 'Votos en las elecciones generales en Elda y Petrer', s: '',
     key: '', hint: 'Toque o pase el ratón por una barra para ver todos los partidos'});
   var hd = box.querySelector('.hd');
   hd.querySelector('h3').insertAdjacentHTML('afterend', '<div class="ctl">' +
